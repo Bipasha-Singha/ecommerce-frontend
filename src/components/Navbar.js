@@ -7,6 +7,7 @@ import { faShoppingCart} from '@fortawesome/free-solid-svg-icons';
 const Navbar = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
+  const userRole = localStorage.getItem('role');
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -30,52 +31,78 @@ const Navbar = () => {
 
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav mr-auto">
-      <li className="nav-item active">
-        <NavLink className="nav-link" to="/">Home <span className="sr-only"></span></NavLink>
-      </li>
-      <li className="nav-item active">
-        <NavLink className="nav-link" to="/about">About <span className="sr-only"></span></NavLink>
-      </li>
-      <li className="nav-item">
-        <NavLink className="nav-link" to="/login">Login</NavLink>
-      </li>
-      <li className="nav-item">
-        <NavLink className="nav-link" to="/register">Registration</NavLink>
-      </li>
-      <li className="nav-item">
-        <NavLink className="nav-link" to="/categories">Categories</NavLink>
-      </li>
-      <li className="nav-item">
-        <NavLink className="nav-link" to="/logout">Logout</NavLink>
-      </li>
+        <li className="nav-item active">
+              <NavLink className="nav-link" to="/">
+                Home <span className="sr-only"></span>
+              </NavLink>
+            </li>
+            <li className="nav-item active">
+              <NavLink className="nav-link" to="/about">
+                About <span className="sr-only"></span>
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/categories">
+                Categories
+              </NavLink>
+            </li>
+            {userRole === 'user' ? (
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/user">
+                  User
+                </NavLink>
+              </li>
+            ) : userRole === 'admin' ? (
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/admin">
+                  Admin
+                </NavLink>
+              </li>
+            ) : (
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/login">
+                  Login
+                </NavLink>
+              </li>
+            )}
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/register">
+                Registration
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/logout">
+                Logout
+              </NavLink>
+            </li>
     </ul>
-    <ul className="navbar-nav">
-        <li className="nav-item">
-            <NavLink className="nav-link" to="/cart">
-               <FontAwesomeIcon icon={faShoppingCart} />
-            </NavLink>
-         </li>
-         <form className="form-inline my-2 my-lg-0" onSubmit={handleSearch}>
-          <div className="d-flex">
-            <input
-              className="form-control mr-sm-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          <button className="btn btn-outline-success my-2 my-sm-0" type="submit" style={{height: "38px", width: "70px"}}>
-            Search
-          </button>
+        <ul className="navbar-nav">
+            <li className="nav-item">
+                <NavLink className="nav-link" to="/cart">
+                  <FontAwesomeIcon icon={faShoppingCart} />
+                </NavLink>
+            </li>
+            <form className="form-inline my-2 my-lg-0" onSubmit={handleSearch}>
+              <div className="d-flex">
+                <input
+                  className="form-control mr-sm-2"
+                  type="search"
+                  placeholder="Search"
+                  aria-label="Search"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              <button className="btn btn-outline-success my-2 my-sm-0" type="submit" style={{height: "38px", width: "70px"}}>
+                Search
+              </button>
 
-          </div>
-        </form>
-    </ul>
-    
-        </div>
-      </nav>
-    </>
+              </div>
+            </form>
+        </ul>
+        
+            </div>
+          </nav>
+        </>
   )
 }
 
